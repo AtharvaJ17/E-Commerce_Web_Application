@@ -15,14 +15,15 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [showSearchResults,setShowSearchResults] = useState(false)
+  const [showSearchResults,setShowSearchResults] = useState(false);  //; wasnt here
+  const API_BASE = import.meta.env.VITE_API_URL;
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async (value) => {
     try {
-      const response = await axios.get("http://localhost:8080/api/products");
+      const response = await axios.get(`${API_BASE}/api/products`);
       setSearchResults(response.data);
       console.log(response.data);
     } catch (error) {
@@ -36,7 +37,7 @@ const Navbar = ({ onSelectCategory, onSearch }) => {
       setShowSearchResults(true)
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/product/search?keyword=${value}`
+        `${API_BASE}/api/product/search?keyword=${value}`
       );
       setSearchResults(response.data);
       setNoResults(response.data.length === 0);

@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 const CheckoutPopup = ({ show, handleClose, cartItems, totalPrice, handleCheckout }) => {
+  
   return (
     <div className="checkoutPopup">
    

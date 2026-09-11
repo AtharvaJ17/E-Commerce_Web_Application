@@ -4,6 +4,7 @@ import axios from "axios";
 import CheckoutPopup from "./CheckoutPopup";
 import { Button } from 'react-bootstrap';
 
+
 const Cart = () => {
   const { cart, removeFromCart, clearCart } = useContext(AppContext);
   const [cartItems, setCartItems] = useState([]);
@@ -11,11 +12,13 @@ const Cart = () => {
   const [cartImageMap, setCartImageMap] = useState({}); // maps productId -> image File
   const [showModal, setShowModal] = useState(false);
 
+  const API_BASE = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchImagesAndUpdateCart = async () => {
       console.log("Cart", cart);
       try {
-        const response = await axios.get("http://localhost:8080/api/products");
+        const response = await axios.get(`${API_BASE}/api/products`);
         const backendProductIds = response.data.map((product) => product.id);
 
         const updatedCartItems = cart.filter((item) => backendProductIds.includes(item.id));
@@ -25,7 +28,7 @@ const Cart = () => {
           updatedCartItems.map(async (item) => {
             try {
               const response = await axios.get(
-                `http://localhost:8080/api/product/${item.id}/image`,
+                `${API_BASE}/api/product/${item.id}/image`,
                 { responseType: "blob" }
               );
               const imageFile = await converUrlToFile(response.data, `${item.id}.jpg`);
@@ -111,7 +114,7 @@ const Cart = () => {
         );
 
         await axios
-          .put(`http://localhost:8080/api/product/${item.id}`, cartProduct, {
+          .put(`${API_BASE}/api/product/${item.id}`, cartProduct, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
