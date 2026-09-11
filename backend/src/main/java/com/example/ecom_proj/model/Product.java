@@ -18,6 +18,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private String description;
     private String brand;
@@ -32,7 +33,6 @@ public class Product {
     private String imageName;
     private String imageType;
 
-    @Lob
-    @Column(columnDefinition = "bytea")
+    @Column(name = "image_data", columnDefinition = "bytea")
     private byte[] imageData;
 }
