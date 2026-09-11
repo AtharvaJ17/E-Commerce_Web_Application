@@ -22,11 +22,7 @@ const AddProduct = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    setProduct({
-      ...product,
-      [name]: value,
-    });
+    setProduct({ ...product, [name]: value });
   };
 
   const handleImageChange = (e) => {
@@ -68,12 +64,10 @@ const AddProduct = () => {
     <div className="container">
       <div className="center-container">
         <form className="row g-3 pt-5" onSubmit={submitHandler}>
-
           <div className="col-md-6">
             <label className="form-label">
               <h6>Name</h6>
             </label>
-
             <input
               type="text"
               className="form-control"
@@ -88,7 +82,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Brand</h6>
             </label>
-
             <input
               type="text"
               name="brand"
@@ -104,7 +97,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Description</h6>
             </label>
-
             <input
               type="text"
               className="form-control"
@@ -120,7 +112,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Price</h6>
             </label>
-
             <input
               type="number"
               className="form-control"
@@ -136,7 +127,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Category</h6>
             </label>
-
             <select
               className="form-select"
               value={product.category}
@@ -158,7 +148,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Stock Quantity</h6>
             </label>
-
             <input
               type="number"
               className="form-control"
@@ -174,7 +163,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Release Date</h6>
             </label>
-
             <input
               type="date"
               className="form-control"
@@ -189,7 +177,6 @@ const AddProduct = () => {
             <label className="form-label">
               <h6>Image</h6>
             </label>
-
             <input
               className="form-control"
               type="file"
@@ -199,7 +186,6 @@ const AddProduct = () => {
 
           <div className="col-12">
             <div className="form-check">
-
               <input
                 className="form-check-input"
                 type="checkbox"
@@ -213,23 +199,17 @@ const AddProduct = () => {
                   })
                 }
               />
-
               <label className="form-check-label">
                 Product Available
               </label>
-
             </div>
           </div>
 
           <div className="col-12">
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
+            <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>
-
         </form>
       </div>
     </div>

@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../Context/Context";
-import unplugged from "../assets/unplugged.png"
+import unplugged from "../assets/unplugged.png";
 
 const Home = ({ selectedCategory }) => {
   const { data, isError, addToCart, refreshData } = useContext(AppContext);
   const [products, setProducts] = useState([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
+
   const API_BASE = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -27,7 +28,9 @@ const Home = ({ selectedCategory }) => {
                 `${API_BASE}/api/product/${product.id}/image`,
                 { responseType: "blob" }
               );
+
               const imageUrl = URL.createObjectURL(response.data);
+
               return { ...product, imageUrl };
             } catch (error) {
               console.error(
@@ -35,10 +38,15 @@ const Home = ({ selectedCategory }) => {
                 product.id,
                 error
               );
-              return { ...product, imageUrl: "placeholder-image-url" };
+
+              return {
+                ...product,
+                imageUrl: "placeholder-image-url",
+              };
             }
           })
         );
+
         setProducts(updatedProducts);
       };
 
@@ -53,10 +61,15 @@ const Home = ({ selectedCategory }) => {
   if (isError) {
     return (
       <h2 className="text-center" style={{ padding: "18rem" }}>
-      <img src={unplugged} alt="Error" style={{ width: '100px', height: '100px' }}/>
+        <img
+          src={unplugged}
+          alt="Error"
+          style={{ width: "100px", height: "100px" }}
+        />
       </h2>
     );
   }
+
   return (
     <>
       <div
@@ -84,13 +97,16 @@ const Home = ({ selectedCategory }) => {
           filteredProducts.map((product) => {
             const { id, brand, name, price, stockQuantity, imageUrl } =
               product;
-            const isAvailable = stockQuantity > 0; // derived from actual stock, not a separate stored flag
+
+            const isAvailable = stockQuantity > 0;
+
             const cardStyle = {
               width: "18rem",
               height: "12rem",
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 2px 3px",
               backgroundColor: isAvailable ? "#fff" : "#ccc",
             };
+
             return (
               <div
                 className="card mb-3"
@@ -99,12 +115,12 @@ const Home = ({ selectedCategory }) => {
                   minHeight: "360px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   borderRadius: "10px",
-                  overflow: "hidden", 
+                  overflow: "hidden",
                   backgroundColor: isAvailable ? "#fff" : "#ccc",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent:'flex-start',
-                  alignItems:'stretch'
+                  justifyContent: "flex-start",
+                  alignItems: "stretch",
                 }}
                 key={id}
               >
@@ -117,13 +133,14 @@ const Home = ({ selectedCategory }) => {
                     alt={name}
                     style={{
                       width: "100%",
-                      height: "150px", 
-                      objectFit: "cover",  
+                      height: "150px",
+                      objectFit: "cover",
                       padding: "5px",
                       margin: "0",
-                      borderRadius: "10px 10px 10px 10px", 
+                      borderRadius: "10px 10px 10px 10px",
                     }}
                   />
+
                   <div
                     className="card-body"
                     style={{
@@ -150,37 +167,57 @@ const Home = ({ selectedCategory }) => {
                       >
                         {name.toUpperCase()}
                       </h5>
+
                       <i
                         className="card-brand"
-                        style={{ fontStyle: "italic", fontSize: "0.8rem" }}
+                        style={{
+                          fontStyle: "italic",
+                          fontSize: "0.8rem",
+                        }}
                       >
                         {"~ " + brand}
                       </i>
                     </div>
-                    <hr className="hr-line" style={{ margin: "10px 0" }} />
+
+                    <hr
+                      className="hr-line"
+                      style={{ margin: "10px 0" }}
+                    />
+
                     <div className="home-cart-price">
                       <h5
                         className="card-text"
-                        style={{ fontWeight: "600", fontSize: "1.1rem",marginBottom:'5px' }}
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "1.1rem",
+                          marginBottom: "5px",
+                        }}
                       >
-                        <i class="bi bi-currency-rupee"></i>
+                        <i className="bi bi-currency-rupee"></i>
                         {price}
                       </h5>
                     </div>
+
                     <button
                       className="btn-hover color-9"
-                      style={{ width: "100%", marginTop: "auto", flexShrink: 0 }}
+                      style={{
+                        width: "100%",
+                        marginTop: "auto",
+                        flexShrink: 0,
+                      }}
                       onClick={(e) => {
                         e.preventDefault();
+
                         if (!isAvailable) {
                           alert("Out of stock");
                           return;
                         }
+
                         addToCart(product);
                       }}
                     >
                       {isAvailable ? "Add to Cart" : "Out of Stock"}
-                    </button> 
+                    </button>
                   </div>
                 </Link>
               </div>

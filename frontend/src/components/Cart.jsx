@@ -32,7 +32,7 @@ const Cart = () => {
                 { responseType: "blob" }
               );
               const imageFile = await converUrlToFile(response.data, `${item.id}.jpg`);
-              imageMap[item.id] = imageFile; // store keyed by product id, not a shared variable
+              imageMap[item.id] = imageFile;
               const imageUrl = URL.createObjectURL(response.data);
               return { ...item, imageUrl };
             } catch (error) {
@@ -107,7 +107,7 @@ const Cart = () => {
         console.log("updated product data", updatedProductData);
 
         const cartProduct = new FormData();
-        cartProduct.append("imageFile", cartImageMap[item.id]); // correct image for THIS item, not a shared leftover
+        cartProduct.append("imageFile", cartImageMap[item.id]);
         cartProduct.append(
           "product",
           new Blob([JSON.stringify(updatedProductData)], { type: "application/json" })
